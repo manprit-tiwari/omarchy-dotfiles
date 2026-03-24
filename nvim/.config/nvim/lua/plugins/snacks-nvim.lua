@@ -17,6 +17,13 @@ return {
     terminal = {
       win = { style = "terminal" },
     },
+    picker = {
+      sources = {
+        explorer = {
+          auto_close = true,
+        },
+      },
+    },
     dashboard = {
       preset = {
         header = [[
