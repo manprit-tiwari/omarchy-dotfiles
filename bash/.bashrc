@@ -18,3 +18,8 @@ export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 # Make an alias for invoking commands you use constantly
 # alias p='python'
 alias vim="nvim"
+
+# Restore TERM_PROGRAM so Ghostty-aware apps (e.g. Claude Code) send native notifications
+if [ -n "$GHOSTTY_BIN_DIR" ] && [ "$TERM_PROGRAM" = "tmux" ]; then
+  export TERM_PROGRAM=ghostty
+fi
