@@ -1,9 +1,13 @@
+/* Omarchy injects @foreground and @background from the active theme */
 @import "../omarchy/current/theme/waybar.css";
 
-* {
-  background-color: @background;
-  color: @foreground;
+/* =================================================================
+   GLOBAL RESET — everything transparent; only capsules get backgrounds
+   ================================================================= */
 
+* {
+  background-color: transparent;
+  color: @foreground;
   border: none;
   border-radius: 0;
   min-height: 0;
@@ -11,101 +15,154 @@
   font-size: 12px;
 }
 
-.modules-left {
-  margin-left: 8px;
+/* Invisible wrapper — the GTK window itself must be transparent so that
+   only the three capsule boxes below show any background. */
+window#waybar {
+  background-color: transparent;
+  background: none;
+  border: none;
 }
 
+/* =================================================================
+   CAPSULE SEGMENTS
+   Only .modules-left, .modules-center, .modules-right have a background.
+   Alpha of 0.80 gives a solid-enough frosted look without compositor blur.
+   box-shadow provides the floating depth.
+   ================================================================= */
+
+.modules-left,
+.modules-center,
 .modules-right {
-  margin-right: 8px;
+  background-color: alpha(@background, 0.80);
+  border: 1px solid alpha(@foreground, 0.10);
+  border-radius: 999px;
+  margin: 6px 4px;
+  padding: 0 10px;
+}
+
+.modules-left  { margin-left:  12px; }
+.modules-right { margin-right: 12px; }
+
+/* =================================================================
+   WORKSPACES
+   ================================================================= */
+
+#workspaces {
+  padding: 0;
+  margin: 0;
 }
 
 #workspaces button {
   all: initial;
-  padding: 0 6px;
-  margin: 0 1.5px;
-  min-width: 9px;
+  color: @foreground;
+  font-family: 'JetBrainsMono Nerd Font';
+  font-size: 12px;
+  /* Horizontal padding for click area; vertical padding creates gap between
+     the hover highlight and the capsule's top/bottom border */
+  padding: 3px 7px;
+  /* Vertical margin adds further breathing room from the capsule edge */
+  margin: 3px 1px;
+  min-width: 10px;
+  border-radius: 999px;
+  transition: background-color 200ms ease;
 }
 
+/* Active workspace — full brightness */
+#workspaces button.active {
+  color: @foreground;
+  font-weight: bold;
+}
+
+/* Persistent empty workspace — heavily dimmed */
 #workspaces button.empty {
-  opacity: 0.5;
+  opacity: 0.28;
 }
 
-#cpu,
-#battery,
-#pulseaudio,
-#custom-omarchy,
-#custom-update {
-  min-width: 12px;
-  margin: 0 7.5px;
+/* Workspace with windows but not focused */
+#workspaces button.occupied {
+  opacity: 0.68;
+}
+
+/* Hover highlight is now visibly inset from the capsule border */
+#workspaces button:hover {
+  background-color: alpha(@foreground, 0.13);
+}
+
+/* =================================================================
+   CLOCK
+   ================================================================= */
+
+#clock {
+  padding: 0 6px;
+  letter-spacing: 0.4px;
+}
+
+/* =================================================================
+   RIGHT SEGMENT — always-visible status icons
+   ================================================================= */
+
+#network,
+#bluetooth,
+#pulseaudio {
+  padding: 0 8px;
+  font-size: 13px;
+}
+
+/* =================================================================
+   TRAY DRAWER
+   ================================================================= */
+
+#custom-drawer-trigger {
+  padding: 0 6px;
+  font-size: 13px;
+  opacity: 0.65;
+  color: @foreground;
+  transition: opacity 200ms ease;
+}
+
+#custom-drawer-trigger:hover {
+  opacity: 1.0;
+}
+
+.drawer-item {
+  padding: 0 2px;
 }
 
 #tray {
-  margin-right: 16px;
+  padding: 0 6px;
 }
 
-#bluetooth {
-  margin-right: 17px;
+#tray > .passive {
+  -gtk-icon-effect: dim;
 }
 
-#network {
-  margin-right: 13px;
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
 }
 
-#custom-expand-icon {
-  margin-right: 18px;
-}
+/* =================================================================
+   TOOLTIPS
+   ================================================================= */
 
 tooltip {
-  padding: 2px;
+  background-color: alpha(@background, 0.95);
+  border: 1px solid alpha(@foreground, 0.15);
+  border-radius: 10px;
+  padding: 4px 10px;
+  color: @foreground;
 }
 
-#custom-update {
-  font-size: 10px;
+tooltip label {
+  color: @foreground;
 }
 
-#clock {
-  margin-left: 8.75px;
-}
+/* =================================================================
+   UTILITY
+   ================================================================= */
 
 .hidden {
   opacity: 0;
-}
-
-#custom-screenrecording-indicator,
-#custom-idle-indicator,
-#custom-notification-silencing-indicator {
-  min-width: 12px;
-  margin-left: 5px;
-  margin-right: 0;
-  font-size: 10px;
-  padding-bottom: 1px;
-}
-
-#custom-screenrecording-indicator.active {
-  color: #a55555;
-}
-
-#custom-idle-indicator.active,
-#custom-notification-silencing-indicator.active {
-  color: #a55555;
-}
-
-#custom-voxtype {
-  min-width: 12px;
-  margin: 0 0 0 7.5px;
-}
-
-#custom-voxtype.recording {
-  color: #a55555;
-}
-
-#custom-weather {
-  margin-left: 7.5px;
-  margin-right: 7.5px;
-}
-
-#custom-weather.unavailable {
   min-width: 0;
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
