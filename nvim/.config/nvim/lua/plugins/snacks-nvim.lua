@@ -1,6 +1,9 @@
 return {
   "snacks.nvim",
   opts = {
+    scroll = {
+      enabled = false,
+    },
     -- Override the terminal style to float.
     -- `q` in normal mode hides the window (keeps process alive).
     -- Toggle with <leader>ft / <leader>fT — re-opens same terminal session.

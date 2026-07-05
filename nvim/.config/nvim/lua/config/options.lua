@@ -10,7 +10,7 @@ vim.g.lazyvim_eslint_auto_format = false
 vim.g.lazyvim_prettier_needs_config = false
 
 -- LazyVim auto format
-vim.g.autoformat = false
+vim.g.autoformat = true
 
 -- Disable relative line numbers by default
 vim.opt.relativenumber = false

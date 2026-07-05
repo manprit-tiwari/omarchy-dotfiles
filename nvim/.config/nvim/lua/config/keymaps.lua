@@ -15,6 +15,3 @@ keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
 
 -- Escape instert mode
 keymap.set("i", "jk", "<Esc>", opts)
-
--- Terminal
-keymap.set("t", "<Leader>ht", "<cmd>close<cr>", { desc = "Hide Terminal" })

@@ -2,7 +2,6 @@ return {
   -- UI
   { import = "lazyvim.plugins.extras.ui.mini-animate" },
   { import = "lazyvim.plugins.extras.ui.mini-indentscope" },
-  { import = "lazyvim.plugins.extras.ui.smear-cursor" },
 
   -- CODING
   { import = "lazyvim.plugins.extras.coding.blink" },
