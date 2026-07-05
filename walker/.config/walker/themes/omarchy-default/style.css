@@ -24,29 +24,25 @@ scrollbar {
 }
 
 /* ================================================================
-   OUTER WRAPPER — frosted glass capsule
+   OUTER WRAPPER — matches Waybar capsule: same bg alpha, same border
    ================================================================ */
 
 .box-wrapper {
-  background: alpha(@base, 0.70);
+  background: alpha(@base, 0.80);
   border-radius: 24px;
-  border: 1px solid alpha(@border, 0.15);
-  padding: 16px;
-  /* GTK4 box-shadow workaround — use outline for glow depth */
-  outline: 1px solid alpha(@base, 0.30);
-  outline-offset: 2px;
+  border: 1px solid alpha(@text, 0.10);
+  padding: 8px;
 }
 
 /* ================================================================
-   SEARCH BAR — pill inside the capsule
+   SEARCH BAR — seamless, no visual break from the capsule
    ================================================================ */
 
 .search-container {
-  background: alpha(@text, 0.06);
   border-radius: 999px;
-  border: 1px solid alpha(@border, 0.12);
+  border: 1px solid alpha(@text, 0.08);
   padding: 8px 16px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 
 .input {
@@ -69,7 +65,7 @@ scrollbar {
    ================================================================ */
 
 .content-container {
-  padding-top: 4px;
+  padding: 2px 0;
 }
 
 .placeholder {
@@ -89,6 +85,7 @@ child:hover .item-box {
 
 child:selected {
   background: alpha(@selected-text, 0.14);
+  border-radius: 12px;
 }
 
 child:selected .item-box * {
@@ -101,7 +98,7 @@ child:selected .item-box * {
 
 .item-box {
   padding: 2px 12px;
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 .item-text-box {
@@ -132,19 +129,13 @@ child:selected .item-box * {
 }
 
 /* ================================================================
-   KEYBIND HINTS (shown at bottom when visible)
+   KEYBIND HINTS
    ================================================================ */
 
-.keybinds {
-  margin-top: 8px;
-}
-
 .keybind-hints {
-  background: alpha(@base, 0.50);
-  border-radius: 10px;
-  border: 1px solid alpha(@border, 0.10);
+  border-top: 1px solid alpha(@text, 0.08);
   padding: 8px 12px;
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 /* ================================================================
@@ -152,9 +143,7 @@ child:selected .item-box * {
    ================================================================ */
 
 .preview-box {
-  background: alpha(@base, 0.40);
-  border-radius: 16px;
-  border: 1px solid alpha(@border, 0.10);
+  border-left: 1px solid alpha(@text, 0.08);
   padding: 12px;
-  margin-left: 10px;
+  margin-left: 4px;
 }
