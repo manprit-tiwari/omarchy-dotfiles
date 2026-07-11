@@ -16,7 +16,7 @@ sed -i 's|^default_entry:.*|default_entry: 1|' "$CONF"
 if ! grep -q "^/Windows" "$CONF"; then
     awk -v partuuid="$WINDOWS_PARTUUID" -v efi="$WINDOWS_EFI" '
         /^\/EFI fallback/ {
-            print "/Windows 11"
+            print "/Windows 10"
             print "protocol: efi_chainload"
             print "image_path: guid(" partuuid "):" efi
             print ""
