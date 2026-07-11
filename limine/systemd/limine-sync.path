@@ -1,0 +1,9 @@
+[Unit]
+Description=Watch for limine.conf sync trigger from boot hooks
+
+[Path]
+PathExists=/tmp/limine-sync-needed
+Unit=limine-sync.service
+
+[Install]
+WantedBy=default.target

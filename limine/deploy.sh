@@ -11,6 +11,8 @@ HOOKS_SRC="${SCRIPT_DIR}/hooks"
 HOOKS_DST="/etc/boot/hooks/post.d"
 CONF="/boot/limine.conf"
 DOTFILES_CONF="${SCRIPT_DIR}/limine.conf"
+SYSTEMD_USER_DIR="/home/manprit/.config/systemd/user"
+GIT_USER="manprit"
 
 if ((EUID != 0)); then
     echo "ERROR: run with sudo." >&2
@@ -23,11 +25,26 @@ install -Dm755 "${HOOKS_SRC}/95-sync-dotfiles" "${HOOKS_DST}/95-sync-dotfiles"
 echo "  Installed: ${HOOKS_DST}/50-windows-entry"
 echo "  Installed: ${HOOKS_DST}/95-sync-dotfiles"
 
+echo "→ Installing limine-sync systemd user units..."
+install -Dm644 "${SCRIPT_DIR}/systemd/limine-sync.path"    "${SYSTEMD_USER_DIR}/limine-sync.path"
+install -Dm644 "${SCRIPT_DIR}/systemd/limine-sync.service" "${SYSTEMD_USER_DIR}/limine-sync.service"
+chmod +x "${SCRIPT_DIR}/sync.sh"
+# Ensure files are owned by the user, not root
+chown -R "${GIT_USER}:${GIT_USER}" "${SYSTEMD_USER_DIR}/limine-sync.path" \
+                                    "${SYSTEMD_USER_DIR}/limine-sync.service"
+# Enable linger so the user service runs even before login (e.g. during boot)
+loginctl enable-linger "${GIT_USER}"
+# Reload and enable the path unit as the user
+runuser -u "${GIT_USER}" -- systemctl --user daemon-reload
+runuser -u "${GIT_USER}" -- systemctl --user enable --now limine-sync.path
+echo "  Enabled: limine-sync.path (user service)"
+
 echo "→ Applying customizations to ${CONF}..."
 bash "${HOOKS_DST}/50-windows-entry"
 
 echo "→ Seeding initial dotfiles snapshot..."
 cp "$CONF" "$DOTFILES_CONF"
+chown "${GIT_USER}:${GIT_USER}" "$DOTFILES_CONF"
 
 echo ""
 echo "✓ Done. Verify with:"

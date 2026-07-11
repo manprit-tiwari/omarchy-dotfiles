@@ -1,0 +1,7 @@
+[Unit]
+Description=Sync limine.conf to dotfiles after boot entry update
+
+[Service]
+Type=oneshot
+ExecStart=/home/manprit/dotfiles/limine/sync.sh
+ExecStartPost=/bin/rm -f /tmp/limine-sync-needed
