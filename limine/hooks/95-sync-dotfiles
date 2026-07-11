@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# After every limine-entry-tool run, syncs /boot/limine.conf back to the dotfiles repo.
+# Installed by dotfiles/limine/deploy.sh → /etc/boot/hooks/post.d/95-sync-dotfiles
+
+CONF="/boot/limine.conf"
+DOTFILES_DIR="/home/manprit/dotfiles"
+DOTFILES_CONF="${DOTFILES_DIR}/limine/limine.conf"
+GIT_USER="manprit"
+
+# Mirror the live config into dotfiles
+cp "$CONF" "$DOTFILES_CONF"
+
+# Bail out if nothing changed (avoids empty commits)
+if runuser -u "$GIT_USER" -- /usr/bin/git -C "$DOTFILES_DIR" diff --quiet limine/limine.conf 2>/dev/null; then
+    exit 0
+fi
+
+# Commit as the user; disable SSH signing since this runs headless without an agent
+runuser -u "$GIT_USER" -- /usr/bin/git \
+    -C "$DOTFILES_DIR" \
+    -c commit.gpgsign=false \
+    add limine/limine.conf
+
+runuser -u "$GIT_USER" -- /usr/bin/git \
+    -C "$DOTFILES_DIR" \
+    -c commit.gpgsign=false \
+    commit -m "chore: sync limine.conf after boot entry update [automated]"

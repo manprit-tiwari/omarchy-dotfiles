@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Ensures Windows 11 dual-boot entry and bootloader settings survive Omarchy/kernel updates.
+# Installed by dotfiles/limine/deploy.sh → /etc/boot/hooks/post.d/50-windows-entry
+
+CONF="/boot/limine.conf"
+WINDOWS_PARTUUID="5f042386-b3bd-4e6d-895b-59c5f4de48df"
+WINDOWS_EFI="/EFI/Microsoft/Boot/bootmgfw.efi"
+
+# Set timeout to 5 seconds (replaces commented or any existing value)
+sed -i 's|^#*timeout:.*|timeout: 5|' "$CONF"
+
+# Make Omarchy (entry 1 = /+Omarchy) the default auto-boot target
+sed -i 's|^default_entry:.*|default_entry: 1|' "$CONF"
+
+# Insert Windows entry before /EFI fallback if not already present
+if ! grep -q "^/Windows" "$CONF"; then
+    awk -v partuuid="$WINDOWS_PARTUUID" -v efi="$WINDOWS_EFI" '
+        /^\/EFI fallback/ {
+            print "/Windows 11"
+            print "protocol: efi_chainload"
+            print "image_path: guid(" partuuid "):" efi
+            print ""
+        }
+        { print }
+    ' "$CONF" > "${CONF}.tmp" && mv "${CONF}.tmp" "$CONF"
+fi
