@@ -20,7 +20,7 @@
 # }
 
 show_system_menu() {
-  local options="󱄄  Screensaver\n  Lock"
+  local options="󱄄  Screensaver\n  Lock"
   ! omarchy-toggle-enabled suspend-off && options="$options\n󰒲  Suspend"
   omarchy-hibernation-available && options="$options\n󰤁  Hibernate"
   options="$options\n󰍃  Logout\n󰜉  Restart\n󰖳  Reboot Windows\n󰐥  Shutdown"
