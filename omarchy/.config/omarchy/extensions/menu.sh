@@ -18,3 +18,22 @@
 # show_about() {
 #   exec omarchy-launch-or-focus-tui "zsh -c 'fastfetch; read -k 1'"
 # }
+
+show_system_menu() {
+  local options="󱄄  Screensaver\n  Lock"
+  ! omarchy-toggle-enabled suspend-off && options="$options\n󰒲  Suspend"
+  omarchy-hibernation-available && options="$options\n󰤁  Hibernate"
+  options="$options\n󰍃  Logout\n󰜉  Restart\n󰖳  Reboot Windows\n󰐥  Shutdown"
+
+  case $(menu "System" "$options") in
+  *Screensaver*) omarchy-launch-screensaver force ;;
+  *Lock*) omarchy-system-lock ;;
+  *Suspend*) systemctl suspend ;;
+  *Hibernate*) systemctl hibernate ;;
+  *Logout*) omarchy-system-logout ;;
+  *Restart*) omarchy-system-reboot ;;
+  *"Reboot Windows"*) present_terminal "sudo reboot-windows" ;;
+  *Shutdown*) omarchy-system-shutdown ;;
+  *) back_to show_main_menu ;;
+  esac
+}
