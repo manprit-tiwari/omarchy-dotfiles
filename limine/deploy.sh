@@ -19,6 +19,10 @@ if ((EUID != 0)); then
     exit 1
 fi
 
+echo "→ Installing reboot-windows script..."
+install -Dm755 "${SCRIPT_DIR}/reboot-windows.sh" /usr/local/bin/reboot-windows
+echo "  Installed: /usr/local/bin/reboot-windows"
+
 echo "→ Installing post hooks..."
 install -Dm755 "${HOOKS_SRC}/50-windows-entry" "${HOOKS_DST}/50-windows-entry"
 install -Dm755 "${HOOKS_SRC}/95-sync-dotfiles" "${HOOKS_DST}/95-sync-dotfiles"
