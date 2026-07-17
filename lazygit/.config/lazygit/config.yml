@@ -1,2 +1,17 @@
 git:
   overrideGpg: true
+
+customCommands:
+  - key: 'T'
+    description: 'Smart release tag (reads .release-tag for format and envs)'
+    command: 'bash ~/.config/lazygit/scripts/smart-tag.sh "{{.Form.Env}}" "{{.SelectedLocalCommit.Sha}}"'
+    context: 'commits'
+    output: 'log'
+    prompts:
+      - type: 'menuFromCommand'
+        title: 'Select environment'
+        key: 'Env'
+        command: 'bash -c ''r=$(git rev-parse --show-toplevel 2>/dev/null);f="$r/.release-tag";[ -f "$f" ] && grep "^envs=" "$f" | cut -d= -f2- | grep -oP "[^, ]+" || true'''
+        filter: '(.*)'
+        valueFormat: '{{ .group_1 }}'
+        labelFormat: '{{ .group_1 }}'
