@@ -11,6 +11,7 @@
     "clock"
   ],
   "modules-right": [
+    "custom/update",
     "network",
     "bluetooth",
     "pulseaudio",
@@ -109,5 +110,13 @@
   "tray": {
     "icon-size": 14,
     "spacing": 10
+  },
+  "custom/update": {
+    "format": "󰚰",
+    "exec": "omarchy-update-available",
+    "on-click": "omarchy-launch-floating-terminal-with-presentation omarchy-update",
+    "tooltip-format": "Omarchy update available",
+    "signal": 7,
+    "interval": 21600
   }
 }
