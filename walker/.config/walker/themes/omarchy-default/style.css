@@ -5,6 +5,11 @@
   all: unset;
 }
 
+/* Let Hyprland's compositor blur show through */
+window {
+  background: transparent;
+}
+
 * {
   font-family: 'JetBrainsMono Nerd Font', monospace;
   font-size: 15px;
@@ -28,9 +33,9 @@ scrollbar {
    ================================================================ */
 
 .box-wrapper {
-  background: alpha(@base, 0.80);
+  background: alpha(@base, 0.45);
   border-radius: 24px;
-  border: 1px solid alpha(@text, 0.10);
+  border: 1px solid alpha(@text, 0.18);
   padding: 8px;
 }
 
