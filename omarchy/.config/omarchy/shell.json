@@ -4,8 +4,12 @@
     "layout": {
       "center": [
         {
+          "id": "omarchy.indicators",
+          "alwaysShow": true
+        },
+        {
           "id": "omarchy.clock",
-          "format": "dddd HH:mm",
+          "format": "ddd dd MMM  ·  'W'ww  ·  HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
           "verticalFormat": "HH\n—\nmm"
         },
@@ -25,10 +29,6 @@
         }
       ],
       "right": [
-        {
-          "id": "omarchy.indicators",
-          "alwaysShow": true
-        },
         {
           "id": "omarchy.tray"
         },
