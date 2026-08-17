@@ -4,8 +4,7 @@
     "layout": {
       "center": [
         {
-          "id": "omarchy.indicators",
-          "alwaysShow": true
+          "id": "omarchy.indicators"
         },
         {
           "id": "omarchy.clock",
@@ -53,7 +52,7 @@
       ]
     },
     "position": "top",
-    "transparent": true
+    "transparent": false
   },
   "idle": {
     "lock": 300,
