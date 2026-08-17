@@ -28,15 +28,19 @@ require("default.hypr.toggles")
 -- Add any other personal Hyprland configuration below.
 
 -- Workspace auto routing
+-- Classes verified against each app's installed .desktop StartupWMClass
+-- (or, for Chrome webapps, hyprctl clients) after the Omarchy 4 migration —
+-- several had drifted from the old Omarchy 3 config (e.g. Postman/OBS/Code/
+-- Antigravity casing, Ghostty only routing once it was set as $TERMINAL).
 o.window({ class = "google-chrome" }, { workspace = "1" })
 o.window({ class = "org.gnome.Nautilus" }, { workspace = "1" })
 o.window({ class = "com.mitchellh.ghostty" }, { workspace = "2" })
-o.window({ class = "Slack" }, { workspace = "3" })
+o.window({ class = "Slack" }, { workspace = "3" }) -- not currently installed; harmless if unused
 o.window({ class = "chrome-web.whatsapp.com__-Default" }, { workspace = "3" })
 o.window({ class = "chrome-chatgpt.com__-Default" }, { workspace = "4" })
-o.window({ class = "MongoDB Compass" }, { workspace = "5" })
-o.window({ class = "Postman" }, { workspace = "6" })
+o.window({ class = "MongoDB Compass" }, { workspace = "5" }) -- no StartupWMClass in .desktop; verify against hyprctl clients when open
+o.window({ class = "postman" }, { workspace = "6" }) -- was "Postman"; StartupWMClass is lowercase
 o.window({ class = "jetbrains-studio" }, { workspace = "9" })
-o.window({ class = "antigravity" }, { workspace = "10" })
-o.window({ class = "code" }, { workspace = "10" })
-o.window({ class = "com.obsproject.Studio" }, { workspace = "special:scratchpad" })
+o.window({ class = "Antigravity" }, { workspace = "10" }) -- was "antigravity"; StartupWMClass is capitalized
+o.window({ class = "Code" }, { workspace = "10" }) -- was "code"; StartupWMClass is capitalized
+o.window({ class = "obs" }, { workspace = "special:scratchpad" }) -- was "com.obsproject.Studio"; StartupWMClass is "obs"
