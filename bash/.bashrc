@@ -17,6 +17,7 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin
 
 # Add your own exports, aliases, and functions here.
+export ENABLE_LSP_TOOL=1
 #
 # Make an alias for invoking commands you use constantly
 # alias p='python'
