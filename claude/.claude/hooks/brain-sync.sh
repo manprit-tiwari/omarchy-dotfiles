@@ -18,7 +18,13 @@ pull() {
 }
 
 case "${1:-}" in
-  pull) pull ;;
+  pull)
+    pull
+    # stow links can be replaced by plain files if a tool rewrites them
+    for f in "$HOME/.claude/settings.json" "$HOME/.claude/CLAUDE.md"; do
+      [ -e "$f" ] && [ ! -L "$f" ] && echo "dotfiles: $f is no longer a symlink into ~/dotfiles; copy it back and re-run stow."
+    done
+    ;;
   push)
     git add -A
     git diff --cached --quiet || git commit -qm "brain: $(hostname -s) $(date '+%F %T')"

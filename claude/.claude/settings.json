@@ -120,5 +120,6 @@
   "voice": {
     "enabled": true,
     "mode": "hold"
-  }
+  },
+  "autoMemoryDirectory": "~/second-brain"
 }

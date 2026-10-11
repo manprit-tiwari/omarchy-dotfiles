@@ -30,3 +30,9 @@ Milestone checkpoints: at the end of each major step (plan approved, design lock
 
 When compacting, keep: the task and its acceptance criteria; every decision and correction the human made (their words, with dates); repos, branches, commits, tags, versions and file paths touched; the current step, what is done and what is next; open questions and known risks or gaps; rules the human set during the session. Point to the plan file and memory entries that hold details rather than restating them.
 Drop: raw tool output, logs, file contents, screenshots, exploration that led nowhere, errors that were fixed (keep only the lesson if it will matter again), and anything already recorded in the plan file or memory.
+
+# Second brain
+
+Shared memory for every project and machine lives in `~/second-brain` (auto-memory directory). Its rules:
+
+@~/second-brain/AGENTS.md
