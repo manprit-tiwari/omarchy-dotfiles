@@ -2,6 +2,8 @@
 # Sync the second-brain vault with its git remote. Usage: brain-sync.sh pull|push
 # Runs from SessionStart (pull) and SessionEnd (push). Never blocks a session.
 set -u
+# Sessions the gardener starts must not sync or start another gardener.
+[ -n "${SECOND_BRAIN_GARDENER:-}" ] && exit 0
 vault="$HOME/second-brain"
 cd "$vault" 2>/dev/null || exit 0
 
@@ -24,6 +26,11 @@ case "${1:-}" in
     for f in "$HOME/.claude/settings.json" "$HOME/.claude/CLAUDE.md"; do
       [ -e "$f" ] && [ ! -L "$f" ] && echo "dotfiles: $f is no longer a symlink into ~/dotfiles; copy it back and re-run stow."
     done
+    # Catch-up: if tonight's gardener did not run (machine was off), the first session of the day starts it.
+    stamp="$vault/.ledger/$(hostname -s).last-run"
+    if [ "$(cat "$stamp" 2>/dev/null)" != "$(date +%F)" ] && [ -f "$vault/tools/gardener/gardener.py" ]; then
+      (nohup python3 "$vault/tools/gardener/gardener.py" --if-due >/dev/null 2>&1 &)
+    fi
     ;;
   push)
     git add -A

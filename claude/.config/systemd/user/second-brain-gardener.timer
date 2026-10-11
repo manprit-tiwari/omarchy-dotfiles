@@ -1,0 +1,11 @@
+[Unit]
+Description=Nightly second-brain gardener
+
+[Timer]
+OnCalendar=*-*-* 02:00
+# Machine off at 02:00: run at next boot. The first Claude session of the day also starts it (brain-sync.sh).
+Persistent=true
+RandomizedDelaySec=10m
+
+[Install]
+WantedBy=timers.target
