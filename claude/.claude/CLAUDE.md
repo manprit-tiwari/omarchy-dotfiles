@@ -26,6 +26,8 @@ Context hygiene: never paste raw logs, whole pages or whole files into context. 
 
 Milestone checkpoints: at the end of each major step (plan approved, design locked, a slice built, verified, released), write the state to the task's plan file (build log: date, repo, commit/tag, status, what is next) and to memory, before moving on. The plan file, not the conversation, is the source of truth, so a compaction or `/clear` loses nothing that matters.
 
+Plugins on demand: `vercel`, `context7` and `chrome-devtools-mcp` (all `@claude-plugins-official`) are installed but disabled, to keep every session's prompt small. When a task needs one (Vercel deploy/config, library docs lookup, Chrome performance/Lighthouse/heap debugging that Playwright MCP can't do), run `claude plugin enable <name>@claude-plugins-official`, ask the human to type `/reload-plugins`, then use it. Disable it again at the end of the task (`claude plugin disable ...`). Never enable one just in case.
+
 # Compact instructions
 
 When compacting, keep: the task and its acceptance criteria; every decision and correction the human made (their words, with dates); repos, branches, commits, tags, versions and file paths touched; the current step, what is done and what is next; open questions and known risks or gaps; rules the human set during the session. Point to the plan file and memory entries that hold details rather than restating them.

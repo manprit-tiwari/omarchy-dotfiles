@@ -1,6 +1,7 @@
 {
   "env": {
-    "BASH_MAX_OUTPUT_LENGTH": "15000"
+    "BASH_MAX_OUTPUT_LENGTH": "15000",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-haiku-5-5"
   },
   "permissions": {
     "defaultMode": "auto"
@@ -56,9 +57,9 @@
   },
   "enabledPlugins": {
     "playwright@claude-plugins-official": false,
-    "context7@claude-plugins-official": true,
+    "context7@claude-plugins-official": false,
     "claude-code-setup@claude-plugins-official": false,
-    "chrome-devtools-mcp@claude-plugins-official": true,
+    "chrome-devtools-mcp@claude-plugins-official": false,
     "superpowers@claude-plugins-official": true,
     "code-review@claude-plugins-official": true,
     "code-simplifier@claude-plugins-official": false,
@@ -66,7 +67,7 @@
     "typescript-lsp@claude-plugins-official": true,
     "mongodb@claude-plugins-official": true,
     "ponytail@ponytail": true,
-    "vercel@claude-plugins-official": true
+    "vercel@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
     "ponytail": {
@@ -82,7 +83,12 @@
       "effortLevel": "medium"
     }
   },
-  "autoCompactWindow": 400000,
+  "autoCompactWindow": 250000,
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "autoMemoryDirectory": "~/second-brain",
   "theme": "auto",
   "preferredNotifChannel": "auto",
   "autoCompactEnabled": true,
@@ -94,32 +100,27 @@
       "### Org-wide",
       "**Organization**: None configured",
       "**Cloud provider(s)**: None configured",
-      "**Repository visibility**: private (exagon-ai/agentic-qa-workspace, confirmed via gh)",
-      "**Internal sharing / snippet hosting**: None configured \u2014 treat public paste/gist services as outside the trust boundary",
+      "**Repository visibility**: private (the exagon-ai org repos and manprit-tiwari/* repos)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
       "**Secrets management**: None configured",
-      "**Default / protected branches**: Default branch master; no protected branches listed (rulesets not queryable here \u2014 this does not confirm the branch is unprotected)",
+      "**Default / protected branches**: Default branch master; no protected branches listed (rulesets not queryable here — this does not confirm the branch is unprotected)",
       "**CI/CD deploy targets**: None configured",
       "**Network posture**: None configured",
-      "**Source control**: The trusted repo and its remote(s) only \u2014 https://github.com/exagon-ai/agentic-qa-workspace.git (no additional orgs configured)",
+      "**Source control**: GitHub orgs/users exagon-ai and manprit-tiwari — every repo cloned under ~/Work/FoodBridge/ plus ~/second-brain and ~/dotfiles; their remotes are trusted",
       "**Trusted internal domains**: None configured",
       "**Trusted cloud buckets**: None configured",
       "**Key internal services**: None configured",
       "**Internal package registry**: None configured",
       "**Sensitive data locations & audiences**: any file or store holding personal data, confidential business data, credentials, regulated data, or similarly sensitive material; preserve exact handles when known and share only with audiences cleared at the [named+specifics] bar",
       "**Data retention / declassification**: None configured",
-      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment (hyphen/underscore/dot-delimited \u2014 e.g. matches `prod-db`, not `producer`)",
-      "**Protected deployment namespaces / environments**: None configured \u2014 fall back to the Sensitive remote targets heuristic",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment (hyphen/underscore/dot-delimited — e.g. matches `prod-db`, not `producer`)",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
       "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
       "### User-specific",
-      "**Primary use of Claude Code**: software development (Agentic QA / Agentic Testing Platform workspace \u2014 dev and QA support session roles per CLAUDE.md)",
-      "**Trusted repo**: ~/Work/FoodBridge/agentic-qa-workspace (this repo), remote https://github.com/exagon-ai/agentic-qa-workspace.git \u2014 private repo, so confidential material belonging to this project is fine here; ported/external content is not automatically this repo's own work",
+      "**Primary use of Claude Code**: software development for the FoodBridge/CafeX platform (planning workspace, host apps, AMDS modules, QA tooling) plus personal config (dotfiles, second-brain)",
+      "**Trusted repos**: every git repo under ~/Work/FoodBridge/ (private, own work), ~/second-brain (shared agent memory, private), ~/dotfiles — confidential project material is fine inside them; ported/external content is not automatically own work",
       "**Org-specific CLIs**: None configured"
     ]
   },
-  "voiceEnabled": true,
-  "voice": {
-    "enabled": true,
-    "mode": "hold"
-  },
-  "autoMemoryDirectory": "~/second-brain"
+  "voiceEnabled": true
 }
