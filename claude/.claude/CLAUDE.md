@@ -26,7 +26,12 @@ Context hygiene: never paste raw logs, whole pages or whole files into context. 
 
 Milestone checkpoints: at the end of each major step (plan approved, design locked, a slice built, verified, released), write the state to the task's plan file (build log: date, repo, commit/tag, status, what is next) and to memory, before moving on. The plan file, not the conversation, is the source of truth, so a compaction or `/clear` loses nothing that matters.
 
-Plugins on demand: `vercel`, `context7` and `chrome-devtools-mcp` (all `@claude-plugins-official`) are installed but disabled, to keep every session's prompt small. When a task needs one (Vercel deploy/config, library docs lookup, Chrome performance/Lighthouse/heap debugging that Playwright MCP can't do), run `claude plugin enable <name>@claude-plugins-official`, ask the human to type `/reload-plugins`, then use it. Disable it again at the end of the task (`claude plugin disable ...`). Never enable one just in case.
+Plugins on demand: `vercel`, `context7`, `chrome-devtools-mcp` and `mongodb` (all `@claude-plugins-official`) are installed but disabled, to keep every session's prompt small. When a task needs one (Vercel deploy/config, library docs lookup, Chrome performance/Lighthouse/heap debugging that Playwright MCP can't do, Mongo index/schema/query-optimiser work beyond `mongosh`), run `claude plugin enable <name>@claude-plugins-official`, ask the human to type `/reload-plugins`, then use it. Disable it again at the end of the task (`claude plugin disable ...`). Never enable one just in case.
+
+Plugin skills vs these rules (these rules win):
+- superpowers `finishing-a-development-branch`: never its plain `git merge`. Integrate per the Git rules above: rebase onto the target, then `git merge --ff-only` (or squash), and push with `--force-with-lease` only for your own WIP branch.
+- superpowers `using-git-worktrees`: the branch name follows the dated WIP rule, and the base comes from the project's instructions (never just the current checkout). Prefer `EnterWorktree` / `--worktree`.
+- Code review: use the built-in `/code-review`; the `code-review` plugin is disabled as a duplicate.
 
 # Compact instructions
 
