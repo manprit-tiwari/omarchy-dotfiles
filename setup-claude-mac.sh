@@ -21,6 +21,13 @@ gh auth setup-git
 # 3. Repos, same paths as Linux (~/Work/FoodBridge/<repo>)
 clone() { [ -d "$2" ] || git clone "$1" "$2"; }
 clone https://github.com/manprit-tiwari/second-brain.git ~/second-brain
+
+# 3a. Second-brain guards, before any Claude session runs the hooks:
+#   - fixed hostname: the gardener's ledger/stamp are per hostname; a drifting macOS name would reprocess everything
+#   - baseline: transcripts already on this Mac (old ~/Manprit/Foodbridge work) are marked done, never turned into notes
+[ "$(scutil --get LocalHostName 2>/dev/null)" = manprit-mac ] || for k in ComputerName HostName LocalHostName; do sudo scutil --set $k manprit-mac; done
+[ -f ~/second-brain/.ledger/manprit-mac.json ] || { python3 ~/second-brain/tools/gardener/gardener.py --baseline && \
+  git -C ~/second-brain add .ledger && git -C ~/second-brain commit -qm "brain: manprit-mac baseline" && git -C ~/second-brain push -q; }
 FB="$HOME/Work/FoodBridge"; mkdir -p "$FB"
 while read -r name url; do clone "$url" "$FB/$name"; done <<'EOF'
 foodbridge-claude-workspace https://github.com/manprit-tiwari/foodbridge-claude-workspace.git
