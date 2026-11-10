@@ -17,13 +17,22 @@ if [ "$OS" = Darwin ]; then
 else
   HOST=omarchy-m
   sudo pacman -S --needed --noconfirm git github-cli stow util-linux nodejs npm python jq docker docker-compose
+  # Playwright MCP (and chrome-devtools-mcp) use Google Chrome at /opt/google/chrome/chrome; Omarchy's repo ships an arm64 build
+  [ -x /opt/google/chrome/chrome ] || sudo pacman -S --needed --noconfirm google-chrome || echo "!! Google Chrome not installed: Playwright MCP needs it"
 fi
 command -v claude >/dev/null || curl -fsSL https://claude.ai/install.sh | bash
 export PATH="$HOME/.local/bin:$PATH"
 
 # 2. GitHub: SSH key + https credential helper (remotes are a mix of both)
 gh auth status >/dev/null 2>&1 || gh auth login -p ssh -w
-gh auth setup-git
+# Linux: register the pacman gh, not mise's versioned path (that breaks the credential helper after a mise upgrade)
+if [ "$OS" = Darwin ]; then gh auth setup-git; else /usr/bin/gh auth setup-git; fi
+# SSH key exists and is on GitHub (gh login with an existing session skips the upload)
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
+[ -f ~/.ssh/id_ed25519 ] || ssh-keygen -t ed25519 -N "" -C "$HOST" -f ~/.ssh/id_ed25519
+gh ssh-key list 2>/dev/null | grep -qF "$(awk '{print $2}' ~/.ssh/id_ed25519.pub)" || gh ssh-key add ~/.ssh/id_ed25519.pub -t "$HOST"
+# GitHub host keys from the API (over authenticated https), so the first git@ clone does not stop at a yes/no prompt
+ssh-keygen -F github.com >/dev/null 2>&1 || gh api meta --jq '.ssh_keys[] | "github.com " + .' >> ~/.ssh/known_hosts
 
 # 3. Repos, same paths as Linux (~/Work/FoodBridge/<repo>)
 clone() { [ -d "$2" ] || git clone "$1" "$2"; }
@@ -99,7 +108,7 @@ fi
 claude plugin marketplace add anthropics/claude-plugins-official 2>/dev/null || true
 claude plugin marketplace add DietrichGebert/ponytail 2>/dev/null || true
 for p in superpowers typescript-lsp frontend-design playwright context7 chrome-devtools-mcp mongodb vercel \
-         code-review code-simplifier claude-md-management claude-code-setup; do
+         code-review code-simplifier claude-md-management claude-code-setup postman; do
   claude plugin install "$p@claude-plugins-official" || echo "!! plugin $p failed"
 done
 claude plugin install ponytail@ponytail || echo "!! plugin ponytail failed"
