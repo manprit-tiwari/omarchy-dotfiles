@@ -64,6 +64,7 @@ autocode git@github.com:exagon-ai/autocode.git
 client-cms https://github.com/exagon-ai/client-cms-hub.git
 foodbridge-cell-registry git@github.com:exagon-ai/foodbridge-cell-registry.git
 foodbridge-db-schema-engine git@github.com:exagon-ai/foodbridge-db-schema-engine.git
+foodbridge-infra git@github.com:exagon-ai/foodbridge-infra.git
 foodbridge-module-accounting-integration https://github.com/exagon-ai/foodbridge-module-accounting-integration.git
 foodbridge-module-analytics https://github.com/exagon-ai/foodbridge-module-analytics.git
 foodbridge-module-client-cms https://github.com/exagon-ai/foodbridge-module-client-cms.git
