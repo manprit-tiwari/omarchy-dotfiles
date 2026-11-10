@@ -1,16 +1,23 @@
 #!/usr/bin/env bash
-# Same Claude Code setup on a Mac (Apple Silicon) as on the Linux box. Safe to re-run.
+# Same Claude Code setup on the MacBook as on bankai: macOS (manprit-mac) or Omarchy on Apple Silicon (omarchy-m).
+# Safe to re-run.
 #   git clone git@github.com:manprit-tiwari/omarchy-dotfiles.git ~/dotfiles   (or via https)
 #   bash ~/dotfiles/setup-claude-mac.sh
 # Config itself is not copied: ~/.claude/{CLAUDE.md,settings.json,statusline,hooks} become symlinks into
 # this repo (stow package `claude`), memory is ~/second-brain (git). Edit on either machine, push, pull.
 set -euo pipefail
-[ "$(uname)" = Darwin ] || { echo "macOS only"; exit 1; }
+OS=$(uname)
 
 # 1. Tools (flock: brain-sync.sh locks with it)
-command -v brew >/dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/opt/homebrew/bin/brew shellenv)"
-brew install git gh stow flock node python jq mongosh
+if [ "$OS" = Darwin ]; then
+  HOST=manprit-mac
+  command -v brew >/dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  brew install git gh stow flock node python jq mongosh
+else
+  HOST=omarchy-m
+  sudo pacman -S --needed --noconfirm git github-cli stow util-linux nodejs npm python jq docker docker-compose
+fi
 command -v claude >/dev/null || curl -fsSL https://claude.ai/install.sh | bash
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -23,11 +30,15 @@ clone() { [ -d "$2" ] || git clone "$1" "$2"; }
 clone https://github.com/manprit-tiwari/second-brain.git ~/second-brain
 
 # 3a. Second-brain guards, before any Claude session runs the hooks:
-#   - fixed hostname: the gardener's ledger/stamp are per hostname; a drifting macOS name would reprocess everything
-#   - baseline: transcripts already on this Mac (old ~/Manprit/Foodbridge work) are marked done, never turned into notes
-[ "$(scutil --get LocalHostName 2>/dev/null)" = manprit-mac ] || for k in ComputerName HostName LocalHostName; do sudo scutil --set $k manprit-mac; done
-[ -f ~/second-brain/.ledger/manprit-mac.json ] || { python3 ~/second-brain/tools/gardener/gardener.py --baseline && \
-  git -C ~/second-brain add .ledger && git -C ~/second-brain commit -qm "brain: manprit-mac baseline" && git -C ~/second-brain push -q; }
+#   - fixed hostname: the gardener's ledger/stamp are per hostname; a drifting name would reprocess everything
+#   - baseline: transcripts already on this machine (old ~/Manprit/Foodbridge work) are marked done, never turned into notes
+if [ "$OS" = Darwin ]; then
+  [ "$(scutil --get LocalHostName 2>/dev/null)" = $HOST ] || for k in ComputerName HostName LocalHostName; do sudo scutil --set $k $HOST; done
+else
+  [ "$(hostnamectl hostname)" = $HOST ] || sudo hostnamectl hostname $HOST
+fi
+[ -f ~/second-brain/.ledger/$HOST.json ] || { python3 ~/second-brain/tools/gardener/gardener.py --baseline && \
+  git -C ~/second-brain add .ledger && git -C ~/second-brain commit -qm "brain: $HOST baseline" && git -C ~/second-brain push -q; }
 FB="$HOME/Work/FoodBridge"; mkdir -p "$FB"
 while read -r name url; do clone "$url" "$FB/$name"; done <<'EOF'
 foodbridge-claude-workspace https://github.com/manprit-tiwari/foodbridge-claude-workspace.git
@@ -69,12 +80,19 @@ unified_ingestion_platform git@github.com:exagon-ai/unified_ingestion_platform.g
 EOF
 
 # 4. Link the Claude config. Existing real files are kept as *.mac-bak.
-#    systemd timer skipped: on a Mac the first Claude session of the day starts the gardener (brain-sync.sh).
+#    macOS: no systemd, the first Claude session of the day starts the gardener (brain-sync.sh).
+#    Omarchy: the 02:00 gardener timer, as on bankai.
 mkdir -p ~/.claude/hooks
 for f in CLAUDE.md settings.json statusline-command.sh; do
   [ -e ~/.claude/$f ] && [ ! -L ~/.claude/$f ] && mv ~/.claude/$f ~/.claude/$f.mac-bak
 done
-stow -d ~/dotfiles -t ~ --no-folding --ignore=systemd claude
+if [ "$OS" = Darwin ]; then
+  stow -d ~/dotfiles -t ~ --no-folding --ignore=systemd claude
+else
+  stow -d ~/dotfiles -t ~ --no-folding claude
+  systemctl --user daemon-reload && systemctl --user enable --now second-brain-gardener.timer
+  sudo systemctl enable --now docker && sudo usermod -aG docker "$USER"   # lanes run on docker; group applies after re-login
+fi
 
 # 5. Plugins: install all (disabled ones are enabled on demand per CLAUDE.md), then restore the
 #    enabled/disabled flags, since `install` writes them into the symlinked settings.json.

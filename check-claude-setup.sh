@@ -49,6 +49,7 @@ t "gardener ledger exists for host '$host'" test -f "$SB/.ledger/$host.json"
 if [[ -f $SB/.ledger/$host.last-run ]]; then ok "gardener last ran $(cat "$SB/.ledger/$host.last-run")"; else warn "gardener has not finished a run on $host yet (starts with the first session of the day)"; fi
 t "brain-sync pull runs clean" test -z "$(bash ~/.claude/hooks/brain-sync.sh pull 2>&1)"
 [[ $(uname) == Darwin ]] && t "Mac hostname fixed (manprit-mac)" test "$(scutil --get LocalHostName)" = manprit-mac
+[[ $(uname) == Linux && $(hostname -s) != bankai ]] && t "Omarchy Mac hostname fixed (omarchy-m)" test "$(hostname -s)" = omarchy-m
 
 echo "Tools"
 for c in git gh python3 node npx flock docker; do t "$c installed" command -v "$c"; done
