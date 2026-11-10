@@ -10,7 +10,12 @@
           "id": "omarchy.clock",
           "format": "ddd dd MMM  ·  'W'ww  ·  HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
-          "verticalFormat": "HH\n—\nmm"
+          "verticalFormat": "HH\n—\nmm",
+          "birthYear": 0,
+          "lifeExpectancy": 90
+        },
+        {
+          "id": "omarchy.elsewhen"
         },
         {
           "id": "omarchy.keyboard-layout"

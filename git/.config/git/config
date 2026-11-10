@@ -39,3 +39,5 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
+[url "https://github.com/exagon-ai/agentic-qa-workspace"]
+	insteadOf = ssh://git@github.com/exagon-ai/agentic-qa-workspace

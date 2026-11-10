@@ -75,3 +75,10 @@ hl.unbind("SUPER + CTRL + TAB")
 o.bind("SUPER + TAB", "Former workspace", hl.dsp.focus({ workspace = "previous" }))
 o.bind("SUPER + CTRL + TAB", "Next workspace", hl.dsp.focus({ workspace = "e+1" }))
 o.bind("SUPER + CTRL + SHIFT + TAB", "Previous workspace", hl.dsp.focus({ workspace = "e-1" }))
+
+-- Dictation keys from before Alt + Space and Right Alt became the defaults.
+-- Remove these lines to give the keys back to applications.
+if o.dictation_installed and o.dictation_installed() then
+  o.bind("SUPER + CTRL + X", "Toggle dictation", "omarchy-dictation toggle")
+  o.bind_hold("F9", "Start dictation (push-to-talk)", "omarchy-dictation start", "Stop dictation (push-to-talk)", "omarchy-dictation stop")
+end

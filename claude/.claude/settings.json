@@ -67,7 +67,8 @@
     "typescript-lsp@claude-plugins-official": true,
     "mongodb@claude-plugins-official": false,
     "ponytail@ponytail": true,
-    "vercel@claude-plugins-official": false
+    "vercel@claude-plugins-official": false,
+    "postman@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "ponytail": {
