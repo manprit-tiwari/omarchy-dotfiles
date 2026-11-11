@@ -55,3 +55,19 @@
 -- Enable touchpad gestures for moving focus (helpful on scrolling layout).
 -- hl.gesture({ fingers = 3, direction = "left", action = function() hl.dispatch(hl.dsp.focus({ direction = "l" })) end })
 -- hl.gesture({ fingers = 3, direction = "right", action = function() hl.dispatch(hl.dsp.focus({ direction = "r" })) end })
+
+-- Personal touchpad setup (MacBook trackpad).
+-- natural_scroll only; the rest of Omarchy's touchpad defaults stay. drag_3fg stays off
+-- because it would swallow the 3-finger window swipe below.
+hl.config({
+  input = {
+    touchpad = {
+      natural_scroll = true,
+    },
+  },
+})
+
+-- 3 fingers left/right: focus the next window in the scrolling strip (fingers point the
+-- way: swipe left = go to the window on the left).
+hl.gesture({ fingers = 3, direction = "left", action = function() hl.dispatch(hl.dsp.focus({ direction = "l" })) end })
+hl.gesture({ fingers = 3, direction = "right", action = function() hl.dispatch(hl.dsp.focus({ direction = "r" })) end })
