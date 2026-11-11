@@ -63,6 +63,6 @@
     "lock": 300,
     "screensaver": 150
   },
-  "plugins": [],
+  "plugins": [{ "id": "manprit.kbd-backlight" }],
   "version": 1
 }

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "id": "manprit.kbd-backlight",
+  "name": "Keyboard backlight idle",
+  "version": "1.0.0",
+  "author": "manprit",
+  "description": "Turns the keyboard backlight off after a few seconds without keyboard or trackpad input, and restores it on the next input (MacBook-style).",
+  "kinds": [
+    "service"
+  ],
+  "keepLoaded": true,
+  "entryPoints": {
+    "service": "Service.qml"
+  }
+}
