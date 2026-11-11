@@ -4,9 +4,6 @@
     "layout": {
       "center": [
         {
-          "id": "omarchy.indicators"
-        },
-        {
           "id": "omarchy.clock",
           "format": "ddd dd MMM  ·  'W'ww  ·  HH:mm",
           "formatAlt": "d MMMM 'W'ww yyyy",
@@ -82,7 +79,14 @@
         {
           "id": "omarchy.power"
         }
-      ]
+      ],
+      "centerBegin": [
+        {
+          "id": "omarchy.indicators"
+        }
+      ],
+      "centerEnd": [],
+      "tray": []
     },
     "position": "top",
     "transparent": true
@@ -91,6 +95,10 @@
     "lock": 300,
     "screensaver": 150
   },
-  "plugins": [{ "id": "manprit.kbd-backlight" }],
+  "plugins": [
+    {
+      "id": "manprit.kbd-backlight"
+    }
+  ],
   "version": 1
 }

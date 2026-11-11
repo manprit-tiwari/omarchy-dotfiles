@@ -63,6 +63,8 @@ hl.config({
   input = {
     touchpad = {
       natural_scroll = false,
+      -- Mac-style: only a physical press clicks, so a stray brush while typing can't move the text cursor.
+      tap_to_click = false,
     },
   },
 })
