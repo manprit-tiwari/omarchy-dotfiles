@@ -1,2 +1,6 @@
 
 [settings.upgrade]
+
+[tools]
+aws-cli = { version = "latest", symlink_bins = "true" }
+terraform = "latest"
