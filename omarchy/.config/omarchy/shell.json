@@ -15,7 +15,35 @@
           "lifeExpectancy": 90
         },
         {
-          "id": "omarchy.elsewhen"
+          "id": "omarchy.elsewhen",
+          "cities": [
+            {
+              "name": "Pune",
+              "zone": "Asia/Kolkata",
+              "lat": 18.51957,
+              "lon": 73.85535,
+              "region": "Maharashtra, IN"
+            },
+            {
+              "name": "Norway",
+              "zone": "Europe/Oslo",
+              "lat": 62,
+              "lon": 10,
+              "region": "NO"
+            },
+            {
+              "name": "UTC",
+              "zone": "Etc/UTC"
+            }
+          ],
+          "here": {
+            "name": "Pune",
+            "zone": "Asia/Kolkata",
+            "lat": 18.51957,
+            "lon": 73.85535,
+            "region": "Maharashtra, IN"
+          },
+          "units": "C"
         },
         {
           "id": "omarchy.keyboard-layout"
