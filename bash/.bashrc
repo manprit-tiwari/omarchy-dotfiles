@@ -27,3 +27,6 @@ alias vim="nvim"
 if [ -n "$GHOSTTY_BIN_DIR" ] && [ "$TERM_PROGRAM" = "tmux" ]; then
   export TERM_PROGRAM=ghostty
 fi
+
+# One shared copy of Terraform providers instead of one per folder
+export TF_PLUGIN_CACHE_DIR=$HOME/.cache/terraform-plugins
