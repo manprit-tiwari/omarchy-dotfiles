@@ -131,5 +131,9 @@
   "voiceEnabled": true,
   "disableClaudeAiConnectors": true,
   "syncClaudeAiSkills": false,
-  "syncClaudeAiPlugins": false
+  "syncClaudeAiPlugins": false,
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
 }
