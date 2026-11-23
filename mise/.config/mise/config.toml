@@ -7,3 +7,4 @@ terraform = "latest"
 # Kept here so Omarchy "Remove preinstalls" (which drops its default mise tools) leaves them installed.
 claude = { version = "latest", lazy = true, auto_update = "4h", minimum_release_age = "0s" }
 opencode = { version = "latest", lazy = true, auto_update = "4h", minimum_release_age = "0s" }
+uv = "0.13.7"
