@@ -11,6 +11,9 @@ hl.unbind("SUPER + RETURN")
 hl.unbind("SUPER + ALT + RETURN")
 o.bind("SUPER + RETURN", "Tmux", { omarchy = "terminal-tmux" })
 o.bind("SUPER + ALT + RETURN", "Terminal", { omarchy = "terminal" })
+-- bankai's Work tmux session over ssh (was Herdr before preinstalled bindings were turned off)
+hl.unbind("SUPER + CTRL + RETURN")
+o.bind("SUPER + CTRL + RETURN", "Tmux on bankai", "omarchy-launch-terminal ssh -t bankai 'tmux attach || tmux new -s Work'")
 
 ----------------------------------------------------------------------------
 -- Screenshot to clipboard (default v4 puts Google Maps on SUPER+SHIFT+S)
